@@ -1,0 +1,24 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #e6e6e6;
+  padding-top: 0px;
+
+}
+header{
+  font: 60px sans-serif;
+  background-image: url("../images/header.jpg");
+  height: 300px;
+  width: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+a {
+  color: #00B7FF;
+}
+
+p{
+  color: #ffffff;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #7f7f7f;
+}

@@ -1,0 +1,141 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <style>
+  .sortorder:after {
+    content: '\25b2';   // BLACK UP-POINTING TRIANGLE
+  }
+  .sortorder.reverse:after {
+    content: '\25bc';   // BLACK DOWN-POINTING TRIANGLE
+  }
+</style>
+<meta charset="utf-8">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+
+<script src="app.js"></script>
+<title>Current Employees</title>
+</head>
+<body ng-controller="myController">
+  <header>
+    <p> Current Employees</p>
+  </header>
+
+  <div style="overflow-x:auto;">
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>
+            <span class="sortorder" ng-show="propertyName === 'name'" ng-class="{reverse: reverse}"></span>
+            <button ng-click="sortBy('name')">Name</button>
+          </th>
+          <th>
+            <span class="sortorder" ng-show="propertyName === 'lastname'" ng-class="{reverse: reverse}"></span>
+            <button ng-click="sortBy('lastname')">Lastname</button>
+          </th>
+          <th>
+            <span class="sortorder" ng-show="propertyName === 'birthdate'" ng-class="{reverse: reverse}"></span>
+            <button ng-click="sortBy('birthdate')">Birthdate</button>
+          </th>
+          <th>
+            <span class="sortorder" ng-show="propertyName === 'profession'" ng-class="{reverse: reverse}"></span>
+            <button ng-click="sortBy('profession')">Profession</button>
+          </th>
+          <th>
+            <span class="sortorder" ng-show="propertyName === 'salary'" ng-class="{reverse: reverse}"></span>
+            <button ng-click="sortBy('salary')">Salary</button>
+          </th>
+          <th>
+            <span class="sortorder" ng-show="propertyName === 'dni'" ng-class="{reverse: reverse}"></span>
+            <button ng-click="sortBy('dni')">DNI</button>
+          </th>
+          <th>
+            <span class="sortorder" ng-show="propertyName === 'cuil'" ng-class="{reverse: reverse}"></span>
+            <button ng-click="sortBy('cuil')">CUIL</button>
+          </th>
+          <th>
+            <span class="sortorder" ng-show="propertyName === 'phone'" ng-class="{reverse: reverse}"></span>
+            <button ng-click="sortBy('phone')">Phone</button>
+          </th>
+          <th>
+            <span class="sortorder" ng-show="propertyName === 'email'" ng-class="{reverse: reverse}"></span>
+            <button ng-click="sortBy('email')">Mail</button>
+          </th>
+          <th>
+            <span class="sortorder" ng-show="propertyName === 'address.country'" ng-class="{reverse: reverse}"></span>
+            <button ng-click="sortBy('address.country')">Country</button>
+          </th>
+          <th>
+            <span class="sortorder" ng-show="propertyName === 'address.state'" ng-class="{reverse: reverse}"></span>
+            <button ng-click="sortBy('state')">State</button>
+          </th>
+          <th>
+            <span class="sortorder" ng-show="propertyName === 'address.city'" ng-class="{reverse: reverse}"></span>
+            <button ng-click="sortBy('city')">City</button>
+          </th>
+          <th>
+            <span class="sortorder" ng-show="propertyName === 'address.street'" ng-class="{reverse: reverse}"></span>
+            <button ng-click="sortBy('street')">Street</button>
+          </th>
+          <th>
+            <span class="sortorder" ng-show="propertyName === 'address.number'" ng-class="{reverse: reverse}"></span>
+            <button ng-click="sortBy('number')">Number</button>
+          </th>
+          <th>
+            <span class="sortorder" ng-show="propertyName === 'address.zipCode'" ng-class="{reverse: reverse}"></span>
+            <button ng-click="sortBy('zipCode')">Zipcode</button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><button class="btn btn-primary" ng-click=addEmployee()>Add Employee</button></td>
+          <td><button class="btn btn-info" ng-click="update()">Update</button>&nbsp;&nbsp;
+            <button class="btn btn-info" ng-click="deselect()">Clean</button></td>
+            <td><input class="form-control" ng-model=employee.name></td>
+            <td><input class="form-control" ng-model=employee.lastname></td>
+            <td><input class="form-control" ng-model=employee.birthdate></td>
+            <td><input class="form-control" ng-model=employee.profession></td>
+            <td><input class="form-control" ng-model=employee.salary></td>
+            <td><input class="form-control" ng-model=employee.dni></td>
+            <td><input class="form-control" ng-model=employee.cuil></td>
+            <td><input class="form-control" ng-model=employee.phone></td>
+            <td><input class="form-control" ng-model=employee.email></td>
+            <td><input class="form-control" ng-model=employee.address.country></td>
+            <td><input class="form-control" ng-model=employee.address.state></td>
+            <td><input class="form-control" ng-model=employee.address.city></td>
+            <td><input class="form-control" ng-model=employee.address.street></td>
+            <td><input class="form-control" ng-model=employee.address.number></td>
+            <td><input class="form-control" ng-model=employee.address.zipCode></td>
+          </tr>
+          <tr ng-repeat="employee in employees | orderBy:propertyName:reverse">
+            <td><button class="btn btn-danger" ng-click="remove(employee._id)">Delete</button></td>
+            <td><button class="btn btn-warning" ng-click="edit(employee._id)">Edit</button></td>
+            <td>{{employee.name | uppercase }}</td>
+            <td>{{employee.lastname}}</td>
+            <td>{{employee.birthdate |  date:"yyyy dd MMM"}}</td>
+            <td>{{employee.profession}}</td>
+            <td>{{employee.salary | currency:"$" }}</td>
+            <td>{{employee.dni}}</td>
+            <td>{{employee.cuil}}</td>
+            <td>{{employee.phone}}</td>
+            <td>{{employee.email}}</td>
+            <td>{{employee.address.country}}</td>
+            <td>{{employee.address.state}}</td>
+            <td>{{employee.address.city}}</td>
+            <td>{{employee.address.street}}</td>
+            <td>{{employee.address.number}}</td>
+            <td>{{employee.address.zipCode}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  </html>
