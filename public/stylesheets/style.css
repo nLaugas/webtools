@@ -6,7 +6,7 @@ body {
 
 }
 header{
-  font: 60px sans-serif;
+  font: 60px "Lucida Grande", Helvetica, Arial, sans-serif;;
   background-image: url("../images/header.jpg");
   height: 300px;
   width: auto;
